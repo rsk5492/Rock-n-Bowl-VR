@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rock-n-Bowl-VR", "Rock-n-Bowl-VR.csproj", "{E5889382-ECA8-1C16-D3F5-091DB2349F1B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rock-n-Bowl-VR.Editor", "Rock-n-Bowl-VR.Editor.csproj", "{D6CF9EFE-17B3-F55B-E822-A710FD56BFEE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E5889382-ECA8-1C16-D3F5-091DB2349F1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5889382-ECA8-1C16-D3F5-091DB2349F1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5889382-ECA8-1C16-D3F5-091DB2349F1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5889382-ECA8-1C16-D3F5-091DB2349F1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6CF9EFE-17B3-F55B-E822-A710FD56BFEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6CF9EFE-17B3-F55B-E822-A710FD56BFEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6CF9EFE-17B3-F55B-E822-A710FD56BFEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6CF9EFE-17B3-F55B-E822-A710FD56BFEE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
