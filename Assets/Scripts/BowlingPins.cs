@@ -26,6 +26,7 @@ public class BowlingPins : MonoBehaviour {
             {
                 child.gameObject.SetActive(false);
                 numPinsDown++;
+                print(numPinsDown);
             }
             
         }
