@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2015
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rock-n-Bowl-VR", "Rock-n-Bowl-VR.csproj", "{E5889382-ECA8-1C16-D3F5-091DB2349F1B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rock-n-Bowl-VR.Plugins", "Rock-n-Bowl-VR.Plugins.csproj", "{7A45E52E-06FF-5086-2143-D6EB2621DD84}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rock-n-Bowl-VR.Editor", "Rock-n-Bowl-VR.Editor.csproj", "{D6CF9EFE-17B3-F55B-E822-A710FD56BFEE}"
 EndProject
@@ -17,6 +17,10 @@ Global
 		{E5889382-ECA8-1C16-D3F5-091DB2349F1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E5889382-ECA8-1C16-D3F5-091DB2349F1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E5889382-ECA8-1C16-D3F5-091DB2349F1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A45E52E-06FF-5086-2143-D6EB2621DD84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A45E52E-06FF-5086-2143-D6EB2621DD84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A45E52E-06FF-5086-2143-D6EB2621DD84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A45E52E-06FF-5086-2143-D6EB2621DD84}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D6CF9EFE-17B3-F55B-E822-A710FD56BFEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D6CF9EFE-17B3-F55B-E822-A710FD56BFEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6CF9EFE-17B3-F55B-E822-A710FD56BFEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
