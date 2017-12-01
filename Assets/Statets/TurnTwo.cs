@@ -22,16 +22,10 @@ public class TurnTwo : IState {
             sc.updateSpareScore(FrameNo, CurrentPinDown);
 		}
 		else {
-            sc.updateScore(FrameNo, totalPinDown, this);
+            sc.updateScore(FrameNo, CurrentPinDown, totalPinDown, this);
         }
-        if (FrameNo < 10)
-        {
-            bpins.Reset();
-        }
-        else
-        {
-            Debug.Log("Game Over");
-        }
+        bpins.Reset();
+        
     }
 	
 }
