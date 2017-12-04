@@ -19,7 +19,7 @@ public class TurnTwo : IState {
         Debug.Log("Turn 2 =>> Total Pin down : " + totalPinDown + ", Current Pin Down : " + CurrentPinDown);
          
         if (totalPinDown == 10) {
-            sc.updateSpareScore(FrameNo, CurrentPinDown);
+            sc.updateSpareScore(FrameNo, false);
 		}
 		else {
             sc.updateScore(FrameNo, CurrentPinDown, totalPinDown, this);

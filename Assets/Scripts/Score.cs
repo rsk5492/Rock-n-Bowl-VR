@@ -22,94 +22,153 @@ public class Score : MonoBehaviour {
     public void Update() {
         
     }
-	
-	public void updateStrikeScore (int frame){
+
+    public void updateStrikeScore(int frame, bool lastTurn) {
         int frameId = frame;
         int bowlid = (frameId - 1) * 2 + 1;
-        updateBowlPins(bowlid, "X");
-        displayComment("* * * Strike * * * ");
-        
         strikeQueue.Enqueue(frame);
-        if (lastSpare)
-        {
+        if (lastSpare){
             score += 20;
             frameId = frame - 1;
             lastSpare = false;
+            updateScoreBoard(frameId, score.ToString());
         }       
         if (strikeQueue.Count == 3) {
             displayComment("O)>  O)>  O)> Turkey <(O  <(O  <(O ");
             score += 30;
 			frameId = (int)strikeQueue.Dequeue();
-			int frameScore = score;
-		}
-        //updateScoreBoard(frameId, score.ToString());
+            updateScoreBoard(frameId, score.ToString());
+        }
+        if (!lastTurn)
+        {
+            updateBowlPins(bowlid, "X");
+            displayComment("* * * Strike * * * ");
+        }
     }
 
 
-	public void updateSpareScore(int frame, int PinsDown){
+	public void updateSpareScore(int frame, bool lastTurn ){
 		int bowlid = (frame - 1) * 2 + 2;
-
-        //Comments.text = "Spare!!!!";
-        displayComment("~~~~Spare~~~");
-        updateBowlPins(bowlid, "/");
-        //updateScoreSpare = true;
         lastSpare = true;
-        if (strikeQueue.Count == 1){
-			score += 20;
-			frame = (int)strikeQueue.Dequeue();
-		}
-       // updateScoreBoard(frame, score.ToString());
-        
+        if (strikeQueue.Count == 1)
+        {
+            score += 20;
+            frame = (int)strikeQueue.Dequeue();
+            updateScoreBoard(frame, score.ToString());
+        }
+        if (!lastTurn)
+        {
+            displayComment("~~~~Spare~~~");
+            updateBowlPins(bowlid, "/");
+            
+        }               
 	}
+
+    public void sameFrameScoreLogic(int frame, int currentPinDown)
+    {
+        int frameId = frame;
+        if (strikeQueue.Count == 2)
+        {
+            score += 20 + currentPinDown;
+            frameId = (int)strikeQueue.Dequeue();
+            updateScoreBoard(frameId, score.ToString());
+        }
+
+        if (lastSpare)
+        {
+            lastSpare = false;
+            score += 10 + currentPinDown;
+            frameId = frame - 1;
+            updateScoreBoard(frameId, score.ToString());
+        }
+    }
 
 	public void updateScore (int frame, int currentPinDown, int totalPinDown, IState state){
 		int frameId = frame ;
         int bowlid;
-        if (state.GetType().ToString().Equals("TurnTwo")){
+        if (state.GetType().ToString().Equals("TurnTwo"))
             bowlid = (frameId - 1) * 2 + 2;
-        }
         else
-        {
             bowlid = (frameId - 1 ) * 2 + 1;
-        }
-        if (currentPinDown == 0)
-            updateBowlPins(bowlid, "-");
-        else
-            updateBowlPins(bowlid, currentPinDown.ToString());
 
-        Debug.Log("Score turn : " + state.GetType().ToString());
-        if (strikeQueue.Count == 2) {
-			score += 20 + currentPinDown;
-            frameId = (int)strikeQueue.Dequeue();
-            updateScoreBoard(frameId, score.ToString());
-        }
-        
-        if (lastSpare) {
-			lastSpare = false;
-			score += 10 + currentPinDown;
-            frameId = frame - 1;
-            updateScoreBoard(frameId, score.ToString());
-		}
+        sameFrameScoreLogic(frame, currentPinDown);
+
         if (state.GetType().ToString().Equals("TurnTwo")) { //this should be done in only turn 2
             if (strikeQueue.Count == 1)
             {
                 score += 10 + totalPinDown;
                 frameId = (int)strikeQueue.Dequeue();
-                
-            }else
+                updateScoreBoard(frameId, score.ToString());
+            }
+            else
                 score += totalPinDown;
-            updateScoreBoard(frameId, score.ToString());
+            updateScoreBoard(frame, score.ToString());
             strikeQueue.Clear();
 		}
+
+        if (currentPinDown == 0)
+            updateBowlPins(bowlid, "-");
+        else
+            updateBowlPins(bowlid, currentPinDown.ToString());
+
     }
 
-    public void lastTurnScore(int frame, int PinsDown)
+    public void lastTurnScore(int frame, int turnCount, int PinsDown, int TotalPinDown, bool turn3, int turnOnePinDown)
     {
-        while(strikeQueue.Count > 0)
+        int bowlid = 18 + turnCount;
+        
+        if (PinsDown == 0)
         {
-            score += 10;
+            updateBowlPins(bowlid, "-");
         }
-        score += PinsDown;
+        if (turnCount <= 2)
+        { //this should  be done in only turn 2
+            if (PinsDown == 10 && turnOnePinDown != PinsDown)
+            {
+                updateStrikeScore(frame, true);
+                updateBowlPins(bowlid, "X");
+            }
+            else if (TotalPinDown == 10 && turnCount == 2)
+            {
+                updateSpareScore(frame, true);
+                updateBowlPins(bowlid, "/");
+            }
+            else
+            {
+                sameFrameScoreLogic(frame, PinsDown);
+                updateBowlPins(bowlid, PinsDown.ToString());
+                if (!turn3 && turnCount == 2)
+                {
+                    score += TotalPinDown;
+                    updateScoreBoard(frame, score.ToString());
+                }
+            }
+        }
+        else
+        {
+            if(PinsDown == 10)
+            {
+                updateBowlPins(bowlid, "X");
+            }
+            else if(TotalPinDown == 10)
+            {
+                updateBowlPins(bowlid, "/");
+            }
+            else
+            {
+                updateBowlPins(bowlid, PinsDown.ToString());
+            }
+            while (strikeQueue.Count > 0)
+                score += 10;
+            if (lastSpare)
+            {
+                score += 10 + PinsDown;
+                lastSpare = false;
+            }
+            else
+                score += TotalPinDown;
+            updateScoreBoard(frame, score.ToString());
+        }
     }
 
     public void displayComment(string cmnt)

@@ -26,7 +26,11 @@ public class BowlingPins : MonoBehaviour {
 	void Update () {
         foreach (Transform child in pins)
         {
-            if(child.gameObject.activeInHierarchy && child.transform.up.y < 0.5f )
+            int i = pins.IndexOf(child);
+            if(child.gameObject.activeInHierarchy //&& child.transform.up.y < 0.5f
+                && child.position != startPos[i] && 
+                child.GetComponent<Rigidbody>().velocity == Vector3.zero &&
+                child.GetComponent<Rigidbody>().angularVelocity == Vector3.zero)
             {
                 child.gameObject.SetActive(false);
                 numPinsDown++;

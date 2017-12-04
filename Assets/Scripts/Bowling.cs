@@ -14,18 +14,17 @@ public class Bowling : MonoBehaviour {
 	void Start () {
 		
         bpins = GameObject.Find("Pins").gameObject.GetComponent<BowlingPins>();
-        bpins.countCurrentPinDown();
-        sm = new StateMachine(bpins);
+        sm = StateMachine.getInstance(bpins);
         Debug.Log("Creating StateMachine was Successful");
 		startposition = transform.position;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if ((GetComponent<Rigidbody>().velocity == Vector3.zero && GetComponent<Rigidbody>().angularVelocity == Vector3.zero && transform.position.z < 3.5f) || transform.position.y < -30f)
+        if ((GetComponent<Rigidbody>().velocity == Vector3.zero && GetComponent<Rigidbody>().angularVelocity == Vector3.zero && transform.position.z < 33.0f))
         {
             sm.displayFrame();
-            Invoke("WaitForBall", 0.5f);
+            Invoke("WaitForBall", 5f);
             transform.position = startposition;
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             GetComponent<Rigidbody>().angularVelocity = Vector3.zero;

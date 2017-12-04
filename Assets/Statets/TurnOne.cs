@@ -24,7 +24,7 @@ public class TurnOne : IState {
 
 	private void Strike(Score sc, int FrameNo){
 		bpins.Reset();
-		sc.updateStrikeScore (FrameNo);
+		sc.updateStrikeScore (FrameNo, false);
 	}
 
 }

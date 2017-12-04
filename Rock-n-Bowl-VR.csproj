@@ -217,6 +217,9 @@
     <Reference Include="UnityEngine.Purchasing">
       <HintPath>Library\UnityAssemblies\UnityEngine.Purchasing.dll</HintPath>
     </Reference>
+    <Reference Include="Assembly-UnityScript-firstpass">
+      <HintPath>Library\ScriptAssemblies\Assembly-UnityScript-firstpass.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Rock-n-Bowl-VR.Plugins.csproj">
@@ -225,6 +228,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\07BRockBowl\Scripts\TakeScreenshot.cs" />
     <Compile Include="Assets\Interfaces\IState.cs" />
     <Compile Include="Assets\Scripts\Bowling.cs" />
     <Compile Include="Assets\Scripts\BowlingPins.cs" />

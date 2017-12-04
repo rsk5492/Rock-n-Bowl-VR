@@ -9,6 +9,7 @@ public class LastTurn: IState {
 	private BowlingPins bpins;
     private int turnCount = 0;
     private StateMachine state;
+    private int turnOnePinDown = 0;
     private bool turn3;
     public LastTurn(StateMachine st, BowlingPins bpins)
     {
@@ -20,34 +21,42 @@ public class LastTurn: IState {
         turnCount++;
         int currentPinDown = bpins.countCurrentPinDown();
         int totalPinDown = bpins.TotalPinDown();
-        if (turn3)
+        if (turnCount == 3 && turn3)
         {
-            sc.updateScore(FrameNo, currentPinDown, totalPinDown, this);
-            state.setState(null);
+            sc.lastTurnScore(FrameNo, turnCount, currentPinDown, totalPinDown, turn3, turnOnePinDown);
+            gameover();
         }
         else
         {
-            if (totalPinDown != 10 && currentPinDown != 10) {
-                sc.updateScore(FrameNo, currentPinDown, totalPinDown, this);
-                if (turnCount == 2)
-                {
-                    Text Comments = GameObject.Find("Comment").GetComponent<Text>();
-                    Comments.text = "Thank you for playing coconut ball";
-                    state.setState(null);
-                    Debug.Log("Game over thanks for playing");
-                }
-            }
-            else
+            if(turnCount == 1)
             {
-                if (currentPinDown == 10)
-                    sc.updateStrikeScore(FrameNo);
-                else
-                    sc.updateSpareScore(FrameNo, currentPinDown);
-                turn3 = true;
+                turnOnePinDown = totalPinDown;
+            }
+            if (totalPinDown == 10 && turnCount <= 2)
+            {
                 bpins.Reset();
+                turn3 = true;
+            }
+            sc.lastTurnScore(FrameNo, turnCount, currentPinDown, totalPinDown, turn3, turnOnePinDown);
+
+            if (!turn3 && turnCount == 2)
+            {
+                //gameover
+                gameover();
+
             }
         }
         
 	}
+
+    public void gameover()
+    {
+        System.Threading.Thread.Sleep(10000);
+        bpins.Reset();
+        turnOnePinDown = 0;
+        turnCount = 0;
+        state.gameReset();
+
+    }
 
 }
