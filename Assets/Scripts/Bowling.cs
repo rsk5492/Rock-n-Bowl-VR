@@ -9,6 +9,7 @@ public class Bowling : MonoBehaviour {
 	private Vector3 startposition;
     private StateMachine sm;
     private BowlingPins bpins;
+    AudioSource roll;
 
 	// Use this for initialization
 	void Start () {
@@ -17,6 +18,7 @@ public class Bowling : MonoBehaviour {
         sm = StateMachine.getInstance(bpins);
         Debug.Log("Creating StateMachine was Successful");
 		startposition = transform.position;
+       roll = GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -28,7 +30,7 @@ public class Bowling : MonoBehaviour {
             transform.position = startposition;
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-            
+            roll.Play();
          }
 	}
     public void WaitForBall()
@@ -38,5 +40,21 @@ public class Bowling : MonoBehaviour {
         sm.ExecuteBowl();
         sm.ChangeState();
 
+    }
+
+    void OnCollisionStay(Collision collision)
+    {
+        if(collision.gameObject.tag=="Floor")
+        {
+            if(GetComponent<Rigidbody>().velocity.sqrMagnitude>1)
+            {
+                Debug.Log("touch");
+                roll.Play();
+            }
+            else
+            {
+                roll.Stop();
+            }
+        }
     }
 }

@@ -6,17 +6,20 @@ public class BowlingPins : MonoBehaviour {
 
     private List<Vector3> startPos = new List<Vector3>();
     private List<Transform> pins = new List<Transform>();
+    private List<Transform> Defaultpins = new List<Transform>();
 
-	private int numPinsDown;
+    private int numPinsDown;
     private int lastPinDown;
     private int currentPinDown;
     private bool previousPinDown;
+    private static object syncRoot = new Object();
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 		foreach(Transform child in transform)
         {
             startPos.Add(child.position);
+            Defaultpins.Add(child);
             pins.Add(child);
         }
         previousPinDown = false;
@@ -24,31 +27,68 @@ public class BowlingPins : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        List<Transform> temPins = new List<Transform>();
+
         foreach (Transform child in pins)
         {
-            int i = pins.IndexOf(child);
-            if(child.gameObject.activeInHierarchy //&& child.transform.up.y < 0.5f
-                && child.position != startPos[i] && 
-                child.GetComponent<Rigidbody>().velocity == Vector3.zero &&
-                child.GetComponent<Rigidbody>().angularVelocity == Vector3.zero)
+            if (child.gameObject.activeInHierarchy && child.transform.localPosition.y > -2f  && 
+                child.transform.localPosition.y < 0.025f && child.transform.rotation.z!=0 && child.transform.rotation.x!=0
+                && child.transform.rotation.y != 0)
             {
-                child.gameObject.SetActive(false);
-                numPinsDown++;
-			} 
+                StartCoroutine(removePins(child));
+            }
+            else
+            {
+                temPins.Add(child);
+            }
         }
+        pins = temPins;
     }
 
+    private IEnumerator removePins(Transform child)
+    {
+            yield return new WaitForSeconds(2f);
+            child.gameObject.SetActive(false);
+            numPinsDown++;
+    }
+
+    /*private IEnumerator CountPins(Transform child)
+    {
+
+        while (true)
+        {
+
+            yield return new WaitForSeconds(2.5f);
+            numPinsDown++;
+
+            //print("WaitAndPrint " + Time.time);
+        }
+    }*/
     public void Reset()
     {
-        for(int i=0; i< pins.Count; i++)
+        pins.Clear();
+        int i = 0;
+        foreach (Transform child in Defaultpins)
         {
+            //startPos.Add(child.position);
+            pins.Add(child);
+            child.gameObject.SetActive(true);
+            child.transform.position = startPos[i++];
+            child.rotation = Quaternion.identity;
+            Rigidbody r = child.GetComponent<Rigidbody>();
+            r.velocity = Vector3.zero;
+            r.angularVelocity = Vector3.zero;
+        }
+        /*for (int i=0; i< pins.Count; i++)
+        {
+            //Text frameScore = GameObject.Find("Pin");
             pins[i].gameObject.SetActive(true);
             pins[i].position = startPos[i];
             pins[i].rotation = Quaternion.identity;
             Rigidbody r = pins[i].GetComponent<Rigidbody>();
             r.velocity = Vector3.zero;
             r.angularVelocity = Vector3.zero;
-        }
+        }*/
         numPinsDown = 0;
         lastPinDown = 0;
         previousPinDown = false;
