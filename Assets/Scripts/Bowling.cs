@@ -26,11 +26,13 @@ public class Bowling : MonoBehaviour {
         if ((GetComponent<Rigidbody>().velocity == Vector3.zero && GetComponent<Rigidbody>().angularVelocity == Vector3.zero && transform.position.z < 33.0f))
         {
             sm.displayFrame();
+            roll.Stop();
             Invoke("WaitForBall", 5f);
             transform.position = startposition;
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-            roll.Play();
+            
+            //roll.Play();
          }
 	}
     public void WaitForBall()
@@ -46,15 +48,14 @@ public class Bowling : MonoBehaviour {
     {
         if(collision.gameObject.tag=="Floor")
         {
-            if(GetComponent<Rigidbody>().velocity.sqrMagnitude>1)
+            if (!roll.isPlaying)
             {
                 Debug.Log("touch");
                 roll.Play();
             }
-            else
-            {
+            if (roll.isPlaying && GetComponent<Rigidbody>().velocity.magnitude < 0.1)
                 roll.Stop();
-            }
+           
         }
     }
 }
