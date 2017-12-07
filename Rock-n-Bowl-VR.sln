@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2015
+# Visual Studio 2017
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rock-n-Bowl-VR", "Rock-n-Bowl-VR.csproj", "{E5889382-ECA8-1C16-D3F5-091DB2349F1B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rock-n-Bowl-VR.Plugins", "Rock-n-Bowl-VR.Plugins.csproj", "{7A45E52E-06FF-5086-2143-D6EB2621DD84}"

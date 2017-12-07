@@ -1,0 +1,4 @@
+sceneSetups:
+- path: C:/Users/CMPE297/Documents/GitHub/New folder/Assets/Neon.unity
+  isLoaded: 1
+  isActive: 1
